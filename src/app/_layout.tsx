@@ -1,7 +1,12 @@
 import "../../global.css";
 
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Slot } from "expo-router";
 
 export default function RootLayout() {
-  return <Slot />;
+  return (
+    <SafeAreaProvider>
+      <Slot />
+    </SafeAreaProvider>
+  );
 }

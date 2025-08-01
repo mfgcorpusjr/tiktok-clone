@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -38,9 +37,12 @@ export default function TabsLayout() {
         options={{
           title: "",
           tabBarIcon: () => (
-            <View className="w-20 h-20 justify-center items-center">
-              <Ionicons name="add-circle" size={72} color="black" />
-            </View>
+            <Ionicons
+              name="add-circle"
+              size={72}
+              color="black"
+              className="w-[72] h-[72]"
+            />
           ),
         }}
       />
