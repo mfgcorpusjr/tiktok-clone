@@ -6,7 +6,22 @@ import KeyboardAvoidingScrollView from "@/components/common/KeyboardAvoidingScro
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
 
+import useSignIn, { Form } from "@/hooks/useSignIn";
+
 export default function SignInScreen() {
+  const {
+    Controller,
+    form: {
+      control,
+      handleSubmit,
+      formState: { errors },
+    },
+  } = useSignIn();
+
+  const handleSignIn = (form: Form) => {
+    console.log(form);
+  };
+
   return (
     <SafeAreaView className="flex-1 p-4 bg-white">
       <KeyboardAvoidingScrollView>
@@ -22,13 +37,49 @@ export default function SignInScreen() {
           </View>
 
           <View className="gap-4">
-            <TextInput
-              placeholder="john@doe.com"
-              keyboardType="email-address"
-            />
-            <TextInput placeholder="password" secureTextEntry />
+            <View className="gap-1">
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    placeholder="john@doe.com"
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                  />
+                )}
+                name="email"
+              />
 
-            <Button text="Sign In" />
+              {errors.email && (
+                <Text className="text-red-500">{errors.email.message}</Text>
+              )}
+            </View>
+
+            <View className="gap-1">
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    placeholder="password"
+                    autoCapitalize="none"
+                    secureTextEntry
+                  />
+                )}
+                name="password"
+              />
+
+              {errors.password && (
+                <Text className="text-red-500">{errors.password.message}</Text>
+              )}
+            </View>
+
+            <Button text="Sign In" onPress={handleSubmit(handleSignIn)} />
 
             <Text className="text-gray-500 text-center">
               Don't have an account?{" "}
