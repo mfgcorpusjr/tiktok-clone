@@ -16,11 +16,10 @@ export default function SignUpScreen() {
       handleSubmit,
       formState: { errors },
     },
+    query: { mutate, isPending },
   } = useSignUp();
 
-  const handleSignUp = (form: Form) => {
-    console.log(form);
-  };
+  const handleSignUp = (form: Form) => mutate(form);
 
   return (
     <SafeAreaView className="flex-1 p-4 bg-white">
@@ -93,7 +92,11 @@ export default function SignUpScreen() {
               )}
             </View>
 
-            <Button text="Sign Up" onPress={handleSubmit(handleSignUp)} />
+            <Button
+              text="Sign Up"
+              isLoading={isPending}
+              onPress={handleSubmit(handleSignUp)}
+            />
 
             <Text className="text-gray-500 text-center">
               Already have an account?{" "}

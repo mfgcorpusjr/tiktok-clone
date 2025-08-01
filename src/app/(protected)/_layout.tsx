@@ -1,8 +1,13 @@
 import { Slot, Redirect } from "expo-router";
 
+import useAuthStore from "@/store/useAuthStore";
+
 export default function ProtectedLayout() {
-  // TODO: remove this later
-  return <Redirect href="sign-in" />;
+  const session = useAuthStore((state) => state.session);
+
+  if (!session) {
+    return <Redirect href="/sign-in" />;
+  }
 
   return <Slot />;
 }
