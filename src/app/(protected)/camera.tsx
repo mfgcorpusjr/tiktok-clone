@@ -48,7 +48,7 @@ export default function CameraScreen() {
   return (
     <View className="flex-1 bg-black">
       {uri ? (
-        <Preview source={uri} play />
+        <Preview source={uri} />
       ) : (
         <CameraView
           style={{ flex: 1 }}

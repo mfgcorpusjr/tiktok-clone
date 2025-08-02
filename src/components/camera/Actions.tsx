@@ -32,13 +32,12 @@ export default function Actions({
       {uri ? (
         <>
           <Ionicons
-            name="close-circle-outline"
-            size={50}
-            color="red"
+            name="close-circle"
+            size={100}
+            color="white"
             onPress={onDiscard}
           />
-
-          <Ionicons name="checkmark-circle-outline" size={50} color="white" />
+          <Ionicons name="checkmark-circle" size={100} color="white" />
         </>
       ) : (
         <>
