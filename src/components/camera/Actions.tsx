@@ -1,13 +1,11 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import * as ImagePicker from "expo-image-picker";
 import { twMerge } from "tailwind-merge";
 
 type ActionsProps = {
+  uri: string;
   isRecording: boolean;
-  video: string;
-  media?: ImagePicker.ImagePickerAsset;
   onToggleFacing: () => void;
   onRecordVideo: () => void;
   onPickMedia: () => void;
@@ -15,9 +13,8 @@ type ActionsProps = {
 };
 
 export default function Actions({
+  uri,
   isRecording,
-  video,
-  media,
   onToggleFacing,
   onRecordVideo,
   onPickMedia,
@@ -27,12 +24,12 @@ export default function Actions({
 
   const className = twMerge(
     "absolute w-full flex-row items-center px-4",
-    media || video ? "justify-evenly" : "justify-between"
+    uri ? "justify-evenly" : "justify-between"
   );
 
   return (
     <View style={{ bottom: bottom + 16 }} className={className}>
-      {media || video ? (
+      {uri ? (
         <>
           <Ionicons
             name="close-circle-outline"

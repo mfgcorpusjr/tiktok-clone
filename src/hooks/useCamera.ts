@@ -28,19 +28,16 @@ const useCamera = () => {
     }
   };
 
-  const discardVideo = () => setVideo("");
-
   return {
     CameraView,
     permission,
     requestPermission,
     cameraRef,
     facing,
+    toggleFacing,
     isRecording,
     video,
-    toggleFacing,
     recordVideo,
-    discardVideo,
   };
 };
 

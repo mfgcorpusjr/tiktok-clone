@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { View } from "react-native";
 
 import Permission from "@/components/camera/Permission";
@@ -7,20 +8,26 @@ import useCamera from "@/hooks/useCamera";
 import useMediaPicker from "@/hooks/useMediaPicker";
 
 export default function CameraScreen() {
+  const [uri, setUri] = useState("");
+
   const {
     CameraView,
     permission,
     requestPermission,
     cameraRef,
     facing,
+    toggleFacing,
     isRecording,
     video,
-    toggleFacing,
     recordVideo,
-    discardVideo,
   } = useCamera();
 
-  const { media, pickMedia, discardMedia } = useMediaPicker();
+  const { media, pickMedia } = useMediaPicker();
+
+  useEffect(() => {
+    if (video) setUri(video);
+    else if (media) setUri(media.uri);
+  }, [video, media]);
 
   if (!permission) {
     return null;
@@ -29,11 +36,6 @@ export default function CameraScreen() {
   if (!permission.granted) {
     return <Permission onPress={requestPermission} />;
   }
-
-  const handleDiscard = () => {
-    discardVideo();
-    discardMedia();
-  };
 
   return (
     <View className="flex-1">
@@ -45,13 +47,12 @@ export default function CameraScreen() {
       />
 
       <Actions
+        uri={uri}
         isRecording={isRecording}
-        video={video}
-        media={media}
         onToggleFacing={toggleFacing}
         onRecordVideo={recordVideo}
         onPickMedia={pickMedia}
-        onDiscard={handleDiscard}
+        onDiscard={() => setUri("")}
       />
     </View>
   );
