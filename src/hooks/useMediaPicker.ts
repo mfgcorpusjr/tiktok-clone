@@ -24,9 +24,12 @@ const useMediaPicker = () => {
     }
   };
 
+  const discardMedia = () => setMedia(undefined);
+
   return {
     media,
     pickMedia,
+    discardMedia,
   };
 };
 

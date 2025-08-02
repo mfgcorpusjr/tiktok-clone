@@ -28,6 +28,8 @@ const useCamera = () => {
     }
   };
 
+  const discardVideo = () => setVideo("");
+
   return {
     CameraView,
     permission,
@@ -38,6 +40,7 @@ const useCamera = () => {
     isRecording,
     video,
     recordVideo,
+    discardVideo,
   };
 };
 

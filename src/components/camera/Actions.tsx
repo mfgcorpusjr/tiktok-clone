@@ -28,13 +28,13 @@ export default function Actions({
   );
 
   return (
-    <View style={{ bottom: bottom + 16 }} className={className}>
+    <View style={{ bottom: bottom + 24 }} className={className}>
       {uri ? (
         <>
           <Ionicons
             name="close-circle-outline"
             size={50}
-            color="white"
+            color="red"
             onPress={onDiscard}
           />
 
