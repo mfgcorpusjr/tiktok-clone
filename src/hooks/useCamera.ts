@@ -22,7 +22,7 @@ const useCamera = () => {
     }
 
     setIsRecording(true);
-    const video = await cameraRef.current?.recordAsync();
+    const video = await cameraRef.current?.recordAsync({ maxDuration: 10 });
     if (video) {
       setVideo(video.uri);
     }

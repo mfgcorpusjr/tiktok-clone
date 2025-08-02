@@ -1,7 +1,4 @@
-import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { twMerge } from "tailwind-merge";
 
 type ActionsProps = {
   uri: string;
@@ -9,6 +6,7 @@ type ActionsProps = {
   onToggleFacing: () => void;
   onRecordVideo: () => void;
   onPickMedia: () => void;
+  onSubmit: () => void;
   onDiscard: () => void;
 };
 
@@ -18,51 +16,42 @@ export default function Actions({
   onToggleFacing,
   onRecordVideo,
   onPickMedia,
+  onSubmit,
   onDiscard,
 }: ActionsProps) {
-  const { bottom } = useSafeAreaInsets();
+  return uri ? (
+    <>
+      <Ionicons
+        name="close-circle"
+        size={100}
+        color="white"
+        onPress={onDiscard}
+      />
 
-  const className = twMerge(
-    "absolute w-full flex-row items-center px-4",
-    uri ? "justify-evenly" : "justify-between"
-  );
+      <Ionicons
+        name="checkmark-circle"
+        size={100}
+        color="white"
+        onPress={onSubmit}
+      />
+    </>
+  ) : (
+    <>
+      <Ionicons name="aperture" size={50} color="white" onPress={onPickMedia} />
 
-  return (
-    <View style={{ bottom: bottom + 24 }} className={className}>
-      {uri ? (
-        <>
-          <Ionicons
-            name="close-circle"
-            size={100}
-            color="white"
-            onPress={onDiscard}
-          />
-          <Ionicons name="checkmark-circle" size={100} color="white" />
-        </>
-      ) : (
-        <>
-          <Ionicons
-            name="aperture"
-            size={50}
-            color="white"
-            onPress={onPickMedia}
-          />
+      <Ionicons
+        name={isRecording ? "stop-circle-outline" : "radio-button-on"}
+        size={100}
+        color={isRecording ? "red" : "white"}
+        onPress={onRecordVideo}
+      />
 
-          <Ionicons
-            name={isRecording ? "stop-circle-outline" : "radio-button-on"}
-            size={100}
-            color={isRecording ? "red" : "white"}
-            onPress={onRecordVideo}
-          />
-
-          <Ionicons
-            name="camera-reverse"
-            size={50}
-            color="white"
-            onPress={onToggleFacing}
-          />
-        </>
-      )}
-    </View>
+      <Ionicons
+        name="camera-reverse"
+        size={50}
+        color="white"
+        onPress={onToggleFacing}
+      />
+    </>
   );
 }
