@@ -36,6 +36,14 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 200
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow TikTok Clone to access your camera",
+          "microphonePermission": "Allow TikTok Clone to access your microphone",
+          "recordAudioAndroid": true
+        }
       ]
     ]
   }

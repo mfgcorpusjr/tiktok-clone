@@ -1,4 +1,4 @@
-import { Slot, Redirect } from "expo-router";
+import { Stack, Redirect } from "expo-router";
 
 import useAuthStore from "@/store/useAuthStore";
 
@@ -9,5 +9,9 @@ export default function ProtectedLayout() {
     return <Redirect href="/sign-in" />;
   }
 
-  return <Slot />;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="camera" options={{ presentation: "modal" }} />
+    </Stack>
+  );
 }

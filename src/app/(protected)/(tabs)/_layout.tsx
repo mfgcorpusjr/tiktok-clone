@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Tabs, router } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function TabsLayout() {
@@ -33,7 +33,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="camera"
+        name="empty"
         options={{
           title: "",
           tabBarIcon: () => (
@@ -44,6 +44,12 @@ export default function TabsLayout() {
               className="w-[72] h-[72]"
             />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.push("/camera");
+          },
         }}
       />
       <Tabs.Screen
