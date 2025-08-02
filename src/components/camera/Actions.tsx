@@ -1,46 +1,56 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import * as ImagePicker from "expo-image-picker";
 import { twMerge } from "tailwind-merge";
 
 type ActionsProps = {
   isRecording: boolean;
   video: string;
+  media?: ImagePicker.ImagePickerAsset;
   onToggleFacing: () => void;
   onRecordVideo: () => void;
-  onDiscardVideo: () => void;
+  onPickMedia: () => void;
+  onDiscard: () => void;
 };
 
 export default function Actions({
   isRecording,
   video,
+  media,
   onToggleFacing,
   onRecordVideo,
-  onDiscardVideo,
+  onPickMedia,
+  onDiscard,
 }: ActionsProps) {
   const { bottom } = useSafeAreaInsets();
 
   const className = twMerge(
     "absolute w-full flex-row items-center px-4",
-    video ? "justify-evenly" : "justify-between"
+    media || video ? "justify-evenly" : "justify-between"
   );
 
   return (
     <View style={{ bottom: bottom + 16 }} className={className}>
-      {video ? (
+      {media || video ? (
         <>
           <Ionicons
             name="close-circle-outline"
             size={50}
             color="white"
-            onPress={onDiscardVideo}
+            onPress={onDiscard}
           />
 
           <Ionicons name="checkmark-circle-outline" size={50} color="white" />
         </>
       ) : (
         <>
-          <Ionicons name="aperture" size={50} color="white" />
+          <Ionicons
+            name="aperture"
+            size={50}
+            color="white"
+            onPress={onPickMedia}
+          />
 
           <Ionicons
             name={isRecording ? "stop-circle-outline" : "radio-button-on"}

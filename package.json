@@ -36,7 +36,8 @@
     "zod": "^4.0.14",
     "zustand": "^5.0.7",
     "expo-splash-screen": "~0.30.10",
-    "expo-camera": "~16.1.11"
+    "expo-camera": "~16.1.11",
+    "expo-image-picker": "~16.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

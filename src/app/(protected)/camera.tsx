@@ -4,6 +4,7 @@ import Permission from "@/components/camera/Permission";
 import Actions from "@/components/camera/Actions";
 
 import useCamera from "@/hooks/useCamera";
+import useMediaPicker from "@/hooks/useMediaPicker";
 
 export default function CameraScreen() {
   const {
@@ -19,6 +20,8 @@ export default function CameraScreen() {
     discardVideo,
   } = useCamera();
 
+  const { media, pickMedia, discardMedia } = useMediaPicker();
+
   if (!permission) {
     return null;
   }
@@ -26,6 +29,11 @@ export default function CameraScreen() {
   if (!permission.granted) {
     return <Permission onPress={requestPermission} />;
   }
+
+  const handleDiscard = () => {
+    discardVideo();
+    discardMedia();
+  };
 
   return (
     <View className="flex-1">
@@ -39,9 +47,11 @@ export default function CameraScreen() {
       <Actions
         isRecording={isRecording}
         video={video}
+        media={media}
         onToggleFacing={toggleFacing}
         onRecordVideo={recordVideo}
-        onDiscardVideo={discardVideo}
+        onPickMedia={pickMedia}
+        onDiscard={handleDiscard}
       />
     </View>
   );
