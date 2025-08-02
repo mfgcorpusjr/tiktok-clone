@@ -34,11 +34,11 @@ const useCreateVideo = () => {
         uri: imageUrl,
       });
     },
-    onSuccess: () => {
+    onSettled: (_, error) => {
+      if (error) {
+        Alert.alert("Error", error.message);
+      }
       router.dismiss();
-    },
-    onError: (error) => {
-      Alert.alert("Error", error.message);
     },
   });
 
