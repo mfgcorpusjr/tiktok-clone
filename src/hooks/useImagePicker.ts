@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const useMediaPicker = () => {
+type MediaTypes = ImagePicker.MediaType | ImagePicker.MediaType[] | undefined;
+
+const useImagePicker = () => {
   const [media, setMedia] = useState<ImagePicker.ImagePickerAsset>();
 
-  const pickMedia = async () => {
+  const pickMedia = async (mediaTypes: MediaTypes = "images") => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
       Alert.alert("Permission Denied", "Media Library permission is required");
@@ -13,7 +15,7 @@ const useMediaPicker = () => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["videos"],
+      mediaTypes,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 0.5,
@@ -33,4 +35,4 @@ const useMediaPicker = () => {
   };
 };
 
-export default useMediaPicker;
+export default useImagePicker;

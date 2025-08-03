@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { View, ActivityIndicator } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { twMerge } from "tailwind-merge";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Permission from "@/components/camera/Permission";
 import Actions from "@/components/camera/Actions";
 import Preview from "@/components/camera/Preview";
 
 import useCamera from "@/hooks/useCamera";
-import useMediaPicker from "@/hooks/useMediaPicker";
+import useImagePicker from "@/hooks/useImagePicker";
 import useCreateVideo from "@/hooks/useCreateVideo";
 
 export default function CameraScreen() {
@@ -27,13 +26,11 @@ export default function CameraScreen() {
     discardVideo,
   } = useCamera();
 
-  const { media, pickMedia, discardMedia } = useMediaPicker();
+  const { media, pickMedia, discardMedia } = useImagePicker();
 
   const {
     query: { mutate, isPending },
   } = useCreateVideo();
-
-  const { bottom } = useSafeAreaInsets();
 
   useEffect(() => {
     if (video) setUri(video);
@@ -56,15 +53,8 @@ export default function CameraScreen() {
     if (media) discardMedia();
   };
 
-  const actionsContainerClass = twMerge(
-    "absolute w-full flex-row items-center px-4",
-    uri ? "justify-evenly" : "justify-between"
-  );
-
-  const actionsContainerStyle = { bottom: bottom + 24 };
-
   return (
-    <View className="flex-1 bg-black">
+    <SafeAreaView className="flex-1 bg-black" edges={["bottom"]}>
       {uri ? (
         <Preview source={uri} />
       ) : (
@@ -76,7 +66,9 @@ export default function CameraScreen() {
         />
       )}
 
-      <View style={actionsContainerStyle} className={actionsContainerClass}>
+      <View
+        className={`bg-black flex-row items-center p-4 ${uri ? "justify-evenly" : "justify-between"}`}
+      >
         {isPending ? (
           <ActivityIndicator size="large" color="white" />
         ) : (
@@ -85,12 +77,12 @@ export default function CameraScreen() {
             isRecording={isRecording}
             onToggleFacing={toggleFacing}
             onRecordVideo={recordVideo}
-            onPickMedia={pickMedia}
+            onPickMedia={() => pickMedia("videos")}
             onSubmit={handleSubmit}
             onDiscard={handleDiscard}
           />
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

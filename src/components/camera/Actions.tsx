@@ -21,19 +21,9 @@ export default function Actions({
 }: ActionsProps) {
   return uri ? (
     <>
-      <Ionicons
-        name="close-circle"
-        size={100}
-        color="white"
-        onPress={onDiscard}
-      />
+      <Ionicons name="close" size={50} color="white" onPress={onDiscard} />
 
-      <Ionicons
-        name="checkmark-circle"
-        size={100}
-        color="white"
-        onPress={onSubmit}
-      />
+      <Ionicons name="checkmark" size={50} color="white" onPress={onSubmit} />
     </>
   ) : (
     <>
@@ -41,7 +31,7 @@ export default function Actions({
 
       <Ionicons
         name={isRecording ? "stop-circle-outline" : "radio-button-on"}
-        size={100}
+        size={75}
         color={isRecording ? "red" : "white"}
         onPress={onRecordVideo}
       />
