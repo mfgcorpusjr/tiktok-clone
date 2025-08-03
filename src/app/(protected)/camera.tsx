@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { View, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -6,37 +5,26 @@ import Permission from "@/components/camera/Permission";
 import Actions from "@/components/camera/Actions";
 import Preview from "@/components/camera/Preview";
 
-import useCamera from "@/hooks/useCamera";
-import useImagePicker from "@/hooks/useImagePicker";
 import useCreatePost from "@/hooks/useCreatePost";
 
 export default function CameraScreen() {
-  const [uri, setUri] = useState("");
-
   const {
-    CameraView,
-    permission,
-    requestPermission,
-    cameraRef,
-    facing,
-    toggleFacing,
-    isRecording,
-    video,
-    recordVideo,
-    discardVideo,
-  } = useCamera();
-
-  const { media, pickMedia, discardMedia } = useImagePicker();
-
-  const {
+    camera: {
+      CameraView,
+      permission,
+      requestPermission,
+      cameraRef,
+      facing,
+      toggleFacing,
+      isRecording,
+      video,
+      recordVideo,
+      discardVideo,
+    },
+    imagePicker: { media, pickMedia, discardMedia },
+    uri,
     query: { mutate, isPending },
   } = useCreatePost();
-
-  useEffect(() => {
-    if (video) setUri(video);
-    else if (media) setUri(media.uri);
-    else setUri("");
-  }, [video, media]);
 
   if (!permission) {
     return null;
@@ -69,7 +57,7 @@ export default function CameraScreen() {
             onToggleFacing={toggleFacing}
             onRecordVideo={recordVideo}
             onPickMedia={() => pickMedia("videos")}
-            onSubmit={() => mutate(uri)}
+            onSubmit={mutate}
             onDiscard={() => {
               if (video) discardVideo();
               if (media) discardMedia();
