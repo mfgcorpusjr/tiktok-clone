@@ -8,7 +8,7 @@ import Preview from "@/components/camera/Preview";
 
 import useCamera from "@/hooks/useCamera";
 import useImagePicker from "@/hooks/useImagePicker";
-import useCreateVideo from "@/hooks/useCreateVideo";
+import useCreatePost from "@/hooks/useCreatePost";
 
 export default function CameraScreen() {
   const [uri, setUri] = useState("");
@@ -30,7 +30,7 @@ export default function CameraScreen() {
 
   const {
     query: { mutate, isPending },
-  } = useCreateVideo();
+  } = useCreatePost();
 
   useEffect(() => {
     if (video) setUri(video);

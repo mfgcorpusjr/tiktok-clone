@@ -4,10 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 import mime from "mime";
 
 import * as StorageAPI from "@/api/storage";
-import * as VideosAPI from "@/api/videos";
+import * as PostsAPI from "@/api/posts";
 import useAuthStore from "@/store/useAuthStore";
 
-const useCreateVideo = () => {
+const useCreatePost = () => {
   const user = useAuthStore((state) => state.user);
 
   const query = useMutation({
@@ -28,7 +28,7 @@ const useCreateVideo = () => {
 
       const imageUrl = StorageAPI.getPublicUrl(bucket, data.fullPath);
 
-      return VideosAPI.createVideo({
+      return PostsAPI.createPost({
         user_id: user?.id!,
         title: "Test title",
         uri: imageUrl,
@@ -47,4 +47,4 @@ const useCreateVideo = () => {
   };
 };
 
-export default useCreateVideo;
+export default useCreatePost;

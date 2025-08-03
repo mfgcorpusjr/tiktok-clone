@@ -57,37 +57,37 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          post_id: number
           text: string
           user_id: string
-          video_id: number
         }
         Insert: {
           created_at?: string
           id?: number
+          post_id: number
           text: string
           user_id: string
-          video_id: number
         }
         Update: {
           created_at?: string
           id?: number
+          post_id?: number
           text?: string
           user_id?: string
-          video_id?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "comments_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "comments_video_id_fkey"
-            columns: ["video_id"]
-            isOneToOne: false
-            referencedRelation: "videos"
             referencedColumns: ["id"]
           },
         ]
@@ -132,22 +132,29 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          post_id: number
           user_id: string
-          video_id: number
         }
         Insert: {
           created_at?: string
           id?: number
+          post_id: number
           user_id: string
-          video_id: number
         }
         Update: {
           created_at?: string
           id?: number
+          post_id?: number
           user_id?: string
-          video_id?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "likes_user_id_fkey"
             columns: ["user_id"]
@@ -155,34 +162,9 @@ export type Database = {
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "likes_video_id_fkey"
-            columns: ["video_id"]
-            isOneToOne: false
-            referencedRelation: "videos"
-            referencedColumns: ["id"]
-          },
         ]
       }
-      users: {
-        Row: {
-          created_at: string
-          id: string
-          username: string
-        }
-        Insert: {
-          created_at?: string
-          id: string
-          username: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          username?: string
-        }
-        Relationships: []
-      }
-      videos: {
+      posts: {
         Row: {
           created_at: string
           id: number
@@ -206,13 +188,31 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "videos_user_id_fkey"
+            foreignKeyName: "posts_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
+      }
+      users: {
+        Row: {
+          created_at: string
+          id: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          username?: string
+        }
+        Relationships: []
       }
     }
     Views: {

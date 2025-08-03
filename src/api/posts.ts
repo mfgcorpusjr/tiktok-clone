@@ -1,9 +1,9 @@
 import { supabase } from "@/lib/supabase";
 import { TablesInsert } from "@/types/database.types";
 
-export const createVideo = async (form: TablesInsert<"videos">) => {
+export const createPost = async (form: TablesInsert<"posts">) => {
   const { data } = await supabase
-    .from("videos")
+    .from("posts")
     .insert(form)
     .single()
     .throwOnError();
