@@ -46,13 +46,6 @@ export default function CameraScreen() {
     return <Permission onPress={requestPermission} />;
   }
 
-  const handleSubmit = () => mutate(uri);
-
-  const handleDiscard = () => {
-    if (video) discardVideo();
-    if (media) discardMedia();
-  };
-
   return (
     <SafeAreaView className="flex-1 bg-black" edges={["bottom"]}>
       {uri ? (
@@ -66,9 +59,7 @@ export default function CameraScreen() {
         />
       )}
 
-      <View
-        className={`bg-black flex-row items-center p-4 ${uri ? "justify-evenly" : "justify-between"}`}
-      >
+      <View className="bg-black h-28 justify-center p-4">
         {isPending ? (
           <ActivityIndicator size="large" color="white" />
         ) : (
@@ -78,8 +69,11 @@ export default function CameraScreen() {
             onToggleFacing={toggleFacing}
             onRecordVideo={recordVideo}
             onPickMedia={() => pickMedia("videos")}
-            onSubmit={handleSubmit}
-            onDiscard={handleDiscard}
+            onSubmit={() => mutate(uri)}
+            onDiscard={() => {
+              if (video) discardVideo();
+              if (media) discardMedia();
+            }}
           />
         )}
       </View>

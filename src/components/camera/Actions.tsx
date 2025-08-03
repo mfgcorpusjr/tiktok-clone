@@ -1,3 +1,4 @@
+import { View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 type ActionsProps = {
@@ -20,14 +21,23 @@ export default function Actions({
   onDiscard,
 }: ActionsProps) {
   return uri ? (
-    <>
+    <View className="flex-row items-center justify-evenly">
       <Ionicons name="close" size={50} color="white" onPress={onDiscard} />
 
       <Ionicons name="checkmark" size={50} color="white" onPress={onSubmit} />
-    </>
+    </View>
   ) : (
-    <>
-      <Ionicons name="aperture" size={50} color="white" onPress={onPickMedia} />
+    <View
+      className={`flex-row items-center ${isRecording ? "justify-center" : "justify-between"}`}
+    >
+      {!isRecording && (
+        <Ionicons
+          name="aperture"
+          size={50}
+          color="white"
+          onPress={onPickMedia}
+        />
+      )}
 
       <Ionicons
         name={isRecording ? "stop-circle-outline" : "radio-button-on"}
@@ -36,12 +46,14 @@ export default function Actions({
         onPress={onRecordVideo}
       />
 
-      <Ionicons
-        name="camera-reverse"
-        size={50}
-        color="white"
-        onPress={onToggleFacing}
-      />
-    </>
+      {!isRecording && (
+        <Ionicons
+          name="camera-reverse"
+          size={50}
+          color="white"
+          onPress={onToggleFacing}
+        />
+      )}
+    </View>
   );
 }
